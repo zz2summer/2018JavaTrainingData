@@ -1,0 +1,35 @@
+package mydbc.dbc;
+import java.sql.*;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2008</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class DBC {
+    public String url;
+    public Connection conn;
+    public DBC only;
+    
+    public DBC getInstance(){
+        
+        if(only == null){
+            return new DBC();
+        }else{
+            return only;
+        }
+    }
+    
+    public void getConnection(){
+        
+        Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+        conn = DriverManager.getConnection(url);
+    }
+}

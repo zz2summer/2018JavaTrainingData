@@ -1,0 +1,130 @@
+package mybook.book;
+
+import java.awt.*;
+
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Rectangle;
+import javax.swing.Box;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import mydbc.dbc.DBC;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2008</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class FrAddmanager extends JFrame {
+    public FrAddmanager() {
+        try {
+            jbInit();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void jbInit() throws Exception {
+        getContentPane().setLayout(null);
+        setSize(new Dimension(300, 200));
+        this.setTitle("添加新管理员");
+        lblName.setText("管理员名：");
+        lblName.setBounds(new Rectangle(26, 27, 60, 15));
+        jLabel1.setText("密码：");
+        jLabel1.setBounds(new Rectangle(26, 55, 60, 15));
+        txtName.setBounds(new Rectangle(99, 21, 103, 21));
+        txtPwd.setBounds(new Rectangle(99, 49, 103, 21));
+        btnAdd.setBounds(new Rectangle(48, 104, 83, 25));
+        btnAdd.setText("添加");
+        btnAdd.addActionListener(new FrAddmanager_btnAdd_actionAdapter(this));
+        btnCancel.setBounds(new Rectangle(109, 150, 83, 25));
+        btnCancel.setText("取消");
+        btnDelete.setBounds(new Rectangle(160, 104, 83, 25));
+        btnDelete.setText("删除");
+        btnDelete.addActionListener(new FrAddmanager_btnDelete_actionAdapter(this));
+        this.getContentPane().add(lblName);
+        this.getContentPane().add(jLabel1);
+        this.getContentPane().add(txtName);
+        this.getContentPane().add(txtPwd);
+        this.getContentPane().add(btnAdd);
+        this.getContentPane().add(btnCancel);
+        this.getContentPane().add(btnDelete);
+    }
+
+    JLabel lblName = new JLabel();
+    JLabel jLabel1 = new JLabel();
+    JTextField txtName = new JTextField();
+    JTextField txtPwd = new JTextField();
+    JButton btnAdd = new JButton();
+    JButton btnCancel = new JButton();
+    JButton btnDelete = new JButton();
+    public void btnAdd_actionPerformed(ActionEvent e) {
+        if(txtName.getText().equals("") || txtPwd.getText().equals("")){
+            javax.swing.JOptionPane.showMessageDialog(this,"管理员名及密码不能为空！请重新输入。");
+            txtName.setText("");
+            txtPwd.setText("");
+        }else{
+            DBC dbc = DBC.getInstance();
+            if(dbc.executeUpdate("INSERT Admin VALUES('"+txtName.getText()+"','"+txtPwd.getText()+"')")){
+                javax.swing.JOptionPane.showMessageDialog(this,"添加成功");
+                this.setVisible(false);
+            }else{
+                javax.swing.JOptionPane.showMessageDialog(this,"添加失败，请重试。");
+                txtName.setText("");
+                txtPwd.setText("");
+                return;
+            }
+        }
+    }
+
+    public void btnDelete_actionPerformed(ActionEvent e) {
+        if(txtName.getText().equals("") || txtPwd.getText().equals("")){
+            javax.swing.JOptionPane.showMessageDialog(this,"管理员名及密码不能为空！请重新输入。");
+            txtName.setText("");
+            txtPwd.setText("");
+        }else{
+            DBC dbc = DBC.getInstance();
+            if(dbc.executeUpdate("DELETE FROM Admin WHERE Aname = '"+txtName.getText()+"' AND Apwd = '"+txtPwd.getText()+"'")){
+                javax.swing.JOptionPane.showMessageDialog(this,"删除成功");
+                this.setVisible(false);
+            }else{
+                javax.swing.JOptionPane.showMessageDialog(this,"删除失败，请重试。");
+                txtName.setText("");
+                txtPwd.setText("");
+                return;
+            }
+        }
+
+    }
+}
+
+
+class FrAddmanager_btnDelete_actionAdapter implements ActionListener {
+    private FrAddmanager adaptee;
+    FrAddmanager_btnDelete_actionAdapter(FrAddmanager adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        adaptee.btnDelete_actionPerformed(e);
+    }
+}
+
+
+class FrAddmanager_btnAdd_actionAdapter implements ActionListener {
+    private FrAddmanager adaptee;
+    FrAddmanager_btnAdd_actionAdapter(FrAddmanager adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        adaptee.btnAdd_actionPerformed(e);
+    }
+}

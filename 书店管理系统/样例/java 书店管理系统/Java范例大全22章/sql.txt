@@ -1,0 +1,50 @@
+-- Table "book" DDL
+
+CREATE TABLE book (
+  price double(11,0) DEFAULT NULL,
+  stock int(11) DEFAULT NULL,
+  publish_time date DEFAULT NULL,
+  publisher varchar(1024) DEFAULT NULL,
+  translator varchar(50) DEFAULT NULL,
+  author varchar(50) DEFAULT NULL,
+  type varchar(50) DEFAULT NULL,
+  name varchar(100) DEFAULT NULL,
+  id varchar(32) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=gb2312;
+
+
+-- Table "borrow" DDL
+
+CREATE TABLE borrow (
+  is_back smallint(1) DEFAULT NULL,
+  back_date date DEFAULT NULL,
+  borrow_date date DEFAULT NULL,
+  reader_id varchar(50) DEFAULT NULL,
+  book_id varchar(50) NOT NULL,
+  id int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=gb2312;
+
+-- Table "reader" DDL
+
+CREATE TABLE reader (
+  days_num int(11) DEFAULT NULL,
+  max_num int(3) DEFAULT NULL,
+  sex varchar(2) DEFAULT NULL,
+  type varchar(20) DEFAULT NULL,
+  name varchar(50) DEFAULT NULL,
+  id int(11) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=gb2312;
+
+
+-- Table "user" DDL
+
+CREATE TABLE user (
+  is_admin smallint(1) DEFAULT NULL,
+  pass varchar(50) DEFAULT NULL,
+  name varchar(50) DEFAULT NULL,
+  id int(11) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=gb2312;

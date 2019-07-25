@@ -1,0 +1,9 @@
+use mysql;
+select host,user from user where user='root'; 
+#查看mysql库中的user表的host值（即可进行连接访问的主机/IP名称）
+
+update user set host = '%' where user ='root';
+#修改host值（以通配符%的内容增加主机/IP地址
+
+flush privileges;
+select host,user from user where user='root';
